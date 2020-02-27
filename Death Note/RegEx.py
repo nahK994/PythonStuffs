@@ -29,13 +29,11 @@ dates = 'First date is 13/2/1994. Second one is 13-02-1994'
 a = """
 <h1><\h1>
 <div>
-<div class="container-chapter-reader">
-<a href = "blablabla"> asdf </a>
-</div>
+    <div class="container-chapter-reader">
+        <a href = "blablabla"> asdf </a>
+    </div>
 </div>
 """
-aa = re.compile(r'<div class="container-chapter-reader">(.*?)</div>', re.S)
-#print(aa.findall(a)[0])
-a = 'a'
-a = 'q' + a
-print(a)
+#aa = re.compile(r'<div class="container-chapter-reader">\s*(.*?)</div>', re.S)
+aa = re.compile(r'<a .* "(.*)">', re.S)
+print(aa.findall(a)[0])
