@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import shutil
 
-url = 'https://www.youtube.com/playlist?list=PLhfHPmPYPPRk6yMrcbfafFGSbE2EPK_A6'
+url = 'https://wallpaperplay.com/genres/abstract'
 
 response = requests.get(url)
 if response.ok:
