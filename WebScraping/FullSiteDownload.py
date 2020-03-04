@@ -28,7 +28,6 @@ print(len(genres))
 for aa in genres:
     print(aa[0] ,' :D ', aa[1])
 '''
-
 for i in genres:
     print('\n' + i[1])
 
@@ -44,23 +43,27 @@ for i in genres:
     response1 = response1.text
 
 
-    folderName = re.findall(r'<div class="column collection_thumb">.*?href="https://wallpaperplay.com/board/(.*?)"', response1, re.S)
+    folderName = re.findall(r'<div class="column collection_thumb">.*?title="(.*?)".*?href="https://wallpaperplay.com/board/(.*?)"', response1, re.S)
+    '''
     print(len(folderName))
+    for i in folderName:
+        print(i[0] + '->' + i[1])
+    '''
+    
     for j in folderName:
 
         try:
-            os.mkdir(fileName + "/" + i[1] + "/" + j)
+            os.mkdir(fileName + "/" + i[1] + "/" + j[0])
         except FileExistsError:
             print("File initializing again.....")
-            shutil.rmtree(fileName + "/" + i[1] + "/" + j)
-            os.mkdir(fileName + "/" + i[1] + "/" + j)
+            shutil.rmtree(fileName + "/" + i[1] + "/" + j[0])
+            os.mkdir(fileName + "/" + i[1] + "/" + j[0])
 
-        print('  ' + j)
-        url2 = 'https://wallpaperplay.com/board/' + j
+        print('  ' + j[0])
+        url2 = 'https://wallpaperplay.com/board/' + j[1]
 
         response2 = requests.get(url2)
         response2 = response2.text
-
 
         imageFilesURL = re.findall(r'data-fullimg="(.*?)"', response2, re.S)
         imageNumber = 1
@@ -73,7 +76,7 @@ for i in genres:
             print('   ', imageFileName, " downloading... ", k)
 
             r = requests.get(k)
-            with open(fileName + "/" + i[1] + "/" + j + "/" + imageFileName, "wb") as f:
+            with open(fileName + "/" + i[1] + "/" + j[0] + "/" + imageFileName, "wb") as f:
                 f.write(r.content)
 
 print("DONE")
