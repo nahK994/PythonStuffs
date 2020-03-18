@@ -26,8 +26,9 @@ genres = re.findall(r'<a href="https://wallpaperplay.com/genres/(.*?)" class="ca
 '''
 print(len(genres))
 for aa in genres:
-    print(aa[0] ,' :D ', aa[1])
+    print(aa)
 '''
+
 for i in genres:
     print('\n' + i[1])
 
@@ -37,21 +38,22 @@ for i in genres:
         print("File initializing again.....")
         shutil.rmtree(fileName + "/" + i[1])
         os.mkdir(fileName + "/" + i[1])
-    
+
     url1 = 'https://wallpaperplay.com/genres/' + i[0]
+    
     response1 = requests.get(url1)
     response1 = response1.text
 
-
     folderName = re.findall(r'<div class="column collection_thumb">.*?title="(.*?)".*?href="https://wallpaperplay.com/board/(.*?)"', response1, re.S)
+
     '''
     print(len(folderName))
-    for i in folderName:
-        print(i[0] + '->' + i[1])
+    for aaa in folderName:
+        print(aaa[0] + '->' + aaa[1])
     '''
-    
-    for j in folderName:
 
+    for j in folderName:
+        
         try:
             os.mkdir(fileName + "/" + i[1] + "/" + j[0])
         except FileExistsError:
@@ -78,5 +80,5 @@ for i in genres:
             r = requests.get(k)
             with open(fileName + "/" + i[1] + "/" + j[0] + "/" + imageFileName, "wb") as f:
                 f.write(r.content)
-
+                
 print("DONE")

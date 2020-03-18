@@ -37,3 +37,6 @@ a = """
 #aa = re.compile(r'<div class="container-chapter-reader">\s*(.*?)</div>', re.S)
 aa = re.compile(r'<a .* "(.*)">', re.S)
 print(aa.findall(a)[0])
+
+email = 'nkskl6@gmail.com'
+print(re.findall(r'\.com', email))
