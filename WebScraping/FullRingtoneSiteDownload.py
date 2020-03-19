@@ -28,7 +28,7 @@ for aa in genres:
     print(aa)
 '''
 
-for i in genres[-1: -1*len(genres)-1:-1]:
+for i in genres:
     print('\n' + i[1])
 
     try:
@@ -67,7 +67,7 @@ for i in genres[-1: -1*len(genres)-1:-1]:
 
         for tones in range(len(titles)):
 
-            print('Downloading...  ', titles[tones], '     ', mp3files[tones])
+            print(titles[tones], '    downloading...  ', mp3files[tones])
             r = requests.get(mp3files[tones])
 
             with open(fileName + "/" + i[1] + "/" + titles[tones], "wb") as f:
