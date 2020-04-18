@@ -4,7 +4,7 @@ from PIL import Image
 import os
 import shutil
 
-url = 'https://www.tonesmp3.com/bollywood-ringtones/1/'
+url = 'https://www.youtube.com/playlist?list=PLZbbT5o_s2xrfNyHZsM6ufI0iZENK9xgG'
 
 response = requests.get(url)
 if response.ok:
