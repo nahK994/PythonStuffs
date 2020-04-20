@@ -9,7 +9,7 @@ url = 'https://www.youtube.com/playlist?list=PLZbbT5o_s2xrfNyHZsM6ufI0iZENK9xgG'
 #url = 'https://www.youtube.com/playlist?list=PLp1zSymEu3zJXITF_WuSPj32_Bni6062l'
 response = requests.get(url)
 if response.ok:
-    print('Ok')
+    print('Ok\n')
 
 
 response = response.text
@@ -24,23 +24,14 @@ except FileExistsError:
     shutil.rmtree(path)
     os.mkdir(path)
 
-
+os.chdir(path)
 contents = re.findall(r'<a class="pl-video-title-link.*?href="(.*?)&amp.*?".*?>\s*(.*?)\s+</a>', response, re.S)
 for i in contents:
     link = 'https://www.youtube.com' + i[0]
-    #fileName = i[1] + '.mp4'
-    fileName = YouTube(link).streams.filter(subtype='mp4').get_highest_resolution().download()
-    index = 0
-    for i in range(len(fileName)):
-        if fileName[i] == '/':
-            index = i
-    fileName = fileName[index+1:]
-    print('downloading.......')
-    print(fileName)
-    print(link)
+    
+    print('downloading....... ' + i[1] + '.mp4')
     print()
-
-    shutil.move(fileName, path)
-
+    
+    YouTube(link).streams.filter(subtype='mp4').get_highest_resolution().download()
 
 print("DONE")
