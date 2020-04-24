@@ -5,15 +5,15 @@ import GA
 
 # Sphere Test Function
 def Sphere(x):
-    return sum(x**4)
+    return sum(x)
 
 
 # Problem Defination
 problem = structure()
 problem.costFunction = Sphere
-problem.nvar = 10
-problem.varmin = -10
-problem.varmax = 10
+problem.nvar = 12
+problem.varmin = 0
+problem.varmax = 1
 
 
 # GA Parameters
@@ -22,7 +22,7 @@ params.cost = Sphere
 params.maxit = 100
 params.npop = 100   # Initial number of offspring
 params.pc = 1       # Proportional of offspring
-params.gamma = 0.1  # Crossover parameter
+# params.gamma = 0.1  # Crossover parameter
 params.mu = 1       # Mutation parameter
 params.sigma = 0.1  # Mutation parameter
 params.beta = 1     # Parent selection parameter

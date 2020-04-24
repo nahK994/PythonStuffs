@@ -1,5 +1,8 @@
 import numpy as np
 
-a = np.arange(1,10)
-b = a <= 5
-print(np.argwhere(b))
+a = [1, 2, 3, 4]
+b = [5, 6, 7, 8]
+
+
+
+print(c)

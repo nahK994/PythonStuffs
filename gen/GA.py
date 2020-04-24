@@ -33,7 +33,8 @@ def run(problem, params):
 
 
     for i in range(npop):
-        pop[i].position = np.random.uniform(varmin, varmax, nvar)
+        # pop[i].position = np.random.uniform(varmin, varmax, nvar)
+        pop[i].position = np.random.randint(2, size=nvar)
         pop[i].cost = costFunction(pop[i].position)
 
         if pop[i].cost < bestSol.cost:
@@ -64,15 +65,15 @@ def run(problem, params):
             p2 = pop[wheel_selection(probability)]
 
             # Crossover
-            c1, c2 = crossover(p1, p2, gamma)
+            c1, c2, c3, c4 = crossover(p1, p2)
 
-            # Mutation
-            c1 = mutation(c1, mu, sigma)
-            c2 = mutation(c2, mu, sigma)
+            # # Mutation
+            # c1 = mutation(c1, mu, sigma)
+            # c2 = mutation(c2, mu, sigma)
 
-            # Apply bounds
-            c1 = apply_bounds(c1, varmax, varmin)
-            c2 = apply_bounds(c2, varmax, varmin)
+            # # Apply bounds
+            # c1 = apply_bounds(c1, varmax, varmin)
+            # c2 = apply_bounds(c2, varmax, varmin)
 
             # Evaluation
             c1.cost = costFunction(c1.position)
@@ -83,9 +84,19 @@ def run(problem, params):
             if c2.cost < bestSol.cost:
                 bestSol = c2.deepcopy()
 
+            c3.cost = costFunction(c3.position)
+            if c3.cost < bestSol.cost:
+                bestSol = c3.deepcopy()
+
+            c4.cost = costFunction(c4.position)
+            if c4.cost < bestSol.cost:
+                bestSol = c4.deepcopy()
+
             # Storing offsprings
             popc.append(c1)
             popc.append(c2)
+            popc.append(c3)
+            popc.append(c4)
 
         # Adding, Sorting, Marging....
         pop += popc
@@ -108,16 +119,27 @@ def run(problem, params):
     return out
 
 
-def crossover(c1, c2, gamma):
+def crossover(c1, c2):
 
     a1 = c1.deepcopy()
     a2 = c2.deepcopy()
-    alpha = np.random.uniform(-gamma, 1+gamma, *c1.position.shape)
 
-    c1.position = alpha*a1.position + (1-alpha)*a2.position
-    c2.position = alpha*a1.position + (1-alpha)*a1.position
+    a3 = c1.deepcopy()
+    a4 = c2.deepcopy()
 
-    return c1, c2
+    for i in range(6, len(c2.position)):
+        a1.position[i] = c2.position[i]
+
+    for i in range(6, len(c1.position)):
+        a2.position[i] = c1.position[i]
+
+    for i in range(4, 8):
+        a3.position[i] = c2.position[i]
+
+    for i in range(4, 8):
+        a4.position[i] = c1.position[i]
+
+    return a1, a2, a3, a4
 
 
 def mutation(x, mu, sigma):
