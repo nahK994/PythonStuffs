@@ -14,7 +14,7 @@ def run(problem, params):
     npop = params.npop
     gamma = params.gamma
     mu = params.mu
-    sigma = params.sigma
+    #sigma = params.sigma
     pc = params.pc
     nc = np.round(pc*npop/2)*2
     beta = params.beta
@@ -50,17 +50,12 @@ def run(problem, params):
 
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
-        if avg_cost != 0:
-            costs /= avg_cost
         probability = np.exp(-beta*costs)
 
         popc = []
         for k in range(int(nc/2)):
 
             # Parant selection
-            # q = np.random.permutation(npop)
-            # p1 = pop[q[0]]
-            # p2 = pop[q[1]]
             p1 = pop[wheel_selection(probability)]
             p2 = pop[wheel_selection(probability)]
 
@@ -68,12 +63,11 @@ def run(problem, params):
             c1, c2, c3, c4 = crossover(p1, p2)
 
             # # Mutation
-            # c1 = mutation(c1, mu, sigma)
-            # c2 = mutation(c2, mu, sigma)
+            c11 = mutation(c1, mu)
+            c22 = mutation(c2, mu)
+            c33 = mutation(c3, mu)
+            c44 = mutation(c4, mu)
 
-            # # Apply bounds
-            # c1 = apply_bounds(c1, varmax, varmin)
-            # c2 = apply_bounds(c2, varmax, varmin)
 
             # Evaluation
             c1.cost = costFunction(c1.position)
@@ -92,11 +86,36 @@ def run(problem, params):
             if c4.cost < bestSol.cost:
                 bestSol = c4.deepcopy()
 
+
+
+            c11.cost = costFunction(c11.position)
+            if c11.cost < bestSol.cost:
+                bestSol = c11.deepcopy()
+
+            c22.cost = costFunction(c22.position)
+            if c22.cost < bestSol.cost:
+                bestSol = c22.deepcopy()
+
+            c33.cost = costFunction(c33.position)
+            if c33.cost < bestSol.cost:
+                bestSol = c33.deepcopy()
+
+            c44.cost = costFunction(c44.position)
+            if c44.cost < bestSol.cost:
+                bestSol = c44.deepcopy()
+
+
             # Storing offsprings
             popc.append(c1)
             popc.append(c2)
             popc.append(c3)
             popc.append(c4)
+
+            popc.append(c11)
+            popc.append(c22)
+            popc.append(c33)
+            popc.append(c44)
+
 
         # Adding, Sorting, Marging....
         pop += popc
@@ -142,22 +161,15 @@ def crossover(c1, c2):
     return a1, a2, a3, a4
 
 
-def mutation(x, mu, sigma):
+def mutation(x, mu):
 
     y = x.deepcopy()
 
     flag = np.random.rand(*x.position.shape) <= mu
     ind = np.argwhere(flag)
 
-    y.position[ind] += sigma*np.random.randn(*ind.shape)
+    y.position[ind] = 1 - y.position[ind]
     return y
-
-
-def apply_bounds(x, varmax, varmin):
-
-    x.position = np.maximum(x.position, varmin)
-    x.position = np.minimum(x.position, varmax)
-    return x
 
 
 def wheel_selection(p):

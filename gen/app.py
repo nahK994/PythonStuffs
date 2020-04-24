@@ -3,9 +3,15 @@ import matplotlib.pyplot as plt
 from ypstruct import structure
 import GA
 
+WeightPerPosotion = [144, 169, 625, 0, -25, -25, -25, -25, 12, 10, -100, 70]
+
 # Sphere Test Function
 def Sphere(x):
-    return sum(x)
+    Sum = 0
+    for i in range(12):
+        if x[i] == 1:
+            Sum += WeightPerPosotion[i]
+    return Sum
 
 
 # Problem Defination
@@ -19,12 +25,10 @@ problem.varmax = 1
 # GA Parameters
 params = structure()
 params.cost = Sphere
-params.maxit = 100
-params.npop = 100   # Initial number of offspring
+params.maxit = 50
+params.npop = 20   # Initial number of offspring
 params.pc = 1       # Proportional of offspring
-# params.gamma = 0.1  # Crossover parameter
-params.mu = 1       # Mutation parameter
-params.sigma = 0.1  # Mutation parameter
+params.mu = 0.4       # Mutation parameter
 params.beta = 1     # Parent selection parameter
 
 
