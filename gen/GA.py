@@ -17,6 +17,7 @@ def run(problem, params):
     sigma = params.sigma
     pc = params.pc
     nc = np.round(pc*npop/2)*2
+    beta = params.beta
 
     # Empty population template
     empty_pop_temp = structure()
@@ -46,13 +47,21 @@ def run(problem, params):
 
     for it in range(maxit):
 
+        costs = np.array([x.cost for x in pop])
+        avg_cost = np.mean(costs)
+        if avg_cost != 0:
+            costs /= avg_cost
+        probability = np.exp(-beta*costs)
+
         popc = []
         for k in range(int(nc/2)):
 
             # Parant selection
-            q = np.random.permutation(npop)
-            p1 = pop[q[0]]
-            p2 = pop[q[1]]
+            # q = np.random.permutation(npop)
+            # p1 = pop[q[0]]
+            # p2 = pop[q[1]]
+            p1 = pop[wheel_selection(probability)]
+            p2 = pop[wheel_selection(probability)]
 
             # Crossover
             c1, c2 = crossover(p1, p2, gamma)
@@ -99,7 +108,6 @@ def run(problem, params):
     return out
 
 
-
 def crossover(c1, c2, gamma):
 
     a1 = c1.deepcopy()
@@ -107,7 +115,7 @@ def crossover(c1, c2, gamma):
     alpha = np.random.uniform(-gamma, 1+gamma, *c1.position.shape)
 
     c1.position = alpha*a1.position + (1-alpha)*a2.position
-    c1.position = alpha*a1.position + (1-alpha)*a1.position
+    c2.position = alpha*a1.position + (1-alpha)*a1.position
 
     return c1, c2
 
@@ -128,3 +136,12 @@ def apply_bounds(x, varmax, varmin):
     x.position = np.maximum(x.position, varmin)
     x.position = np.minimum(x.position, varmax)
     return x
+
+
+def wheel_selection(p):
+
+    s = np.sum(p)
+    c = np.cumsum(p)
+    flag = s*np.random.rand() <= c
+    ind = np.argwhere(flag)
+    return ind[0][0]

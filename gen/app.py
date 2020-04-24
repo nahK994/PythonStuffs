@@ -11,7 +11,7 @@ def Sphere(x):
 # Problem Defination
 problem = structure()
 problem.costFunction = Sphere
-problem.nvar = 5
+problem.nvar = 10
 problem.varmin = -10
 problem.varmax = 10
 
@@ -20,11 +20,12 @@ problem.varmax = 10
 params = structure()
 params.cost = Sphere
 params.maxit = 100
-params.npop = 500
-params.pc = 4
+params.npop = 100   # Initial number of offspring
+params.pc = 1       # Proportional of offspring
 params.gamma = 0.1  # Crossover parameter
 params.mu = 1       # Mutation parameter
-params.sigma = 0.5  # Mutation parameter
+params.sigma = 0.1  # Mutation parameter
+params.beta = 1     # Parent selection parameter
 
 
 # Run GA
