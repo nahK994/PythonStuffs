@@ -132,45 +132,45 @@ def run(problem, params):
 
 def crossover(c1, c2):
 
-    # a1 = c1.deepcopy()
-    # a2 = c2.deepcopy()
+    a1 = c1.deepcopy()
+    a2 = c2.deepcopy()
 
-    a3 = c1.deepcopy()
-    a4 = c2.deepcopy()
+    # a3 = c1.deepcopy()
+    # a4 = c2.deepcopy()
 
-    # partition = int(np.round(np.random.rand(1)*len(c1.position)-1))
+    partition = int(np.round(np.random.rand(1)*len(c1.position)-1))
 
-    # for i in range(partition, len(c2.position)):
-    #     a1.position[i] = c2.position[i]
+    for i in range(partition, len(c2.position)):
+        a1.position[i] = c2.position[i]
 
-    # for i in range(partition, len(c1.position)):
-    #     a2.position[i] = c1.position[i]
+    for i in range(partition, len(c1.position)):
+        a2.position[i] = c1.position[i]
 
 
-    partition1 = -1
-    while partition1 == -1:
-        partition1 = int(np.round(np.random.rand(1)*len(c1.position)-1))
+    # partition1 = -1
+    # while partition1 == -1:
+    #     partition1 = int(np.round(np.random.rand(1)*len(c1.position)-1))
 
-        if len(c1.position)%2 == 0:
-            if partition1 == int(len(c1.position)/2)-1 or partition1 == int(len(c1.position)/2):
-                partition1 = -1
-        if partition1 == 0 or partition1 == len(c1.position)-1:
-            partition1 = -1
+    #     if len(c1.position)%2 == 0:
+    #         if partition1 == int(len(c1.position)/2)-1 or partition1 == int(len(c1.position)/2):
+    #             partition1 = -1
+    #     if partition1 == 0 or partition1 == len(c1.position)-1:
+    #         partition1 = -1
 
-    partition2 = len(c1.position) - partition1 -1
+    # partition2 = len(c1.position) - partition1 -1
 
-    if(partition1 > partition2):
-        aa = partition1
-        partition1 = partition2
-        partition2 = aa
+    # if(partition1 > partition2):
+    #     aa = partition1
+    #     partition1 = partition2
+    #     partition2 = aa
 
-    for i in range(partition1, partition2):
-        a3.position[i] = c2.position[i]
+    # for i in range(partition1, partition2):
+    #     a3.position[i] = c2.position[i]
 
-    for i in range(partition1, partition2):
-        a4.position[i] = c1.position[i]
+    # for i in range(partition1, partition2):
+    #     a4.position[i] = c1.position[i]
 
-    return a3, a4
+    return a1, a2
 
 
 def mutation(x, mu):

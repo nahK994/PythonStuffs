@@ -26,8 +26,8 @@ problem.varmax = 1
 params = structure()
 params.cost = Sphere
 params.maxit = 50
-params.npop = 20    # Initial number of offspring
-params.pc = 2       # Proportional of offspring
+params.npop = 40    # Initial number of offspring
+params.pc = 1       # Proportional of offspring
 params.mu = 0.5     # Mutation parameter
 params.beta = 1     # Parent selection parameter
 
