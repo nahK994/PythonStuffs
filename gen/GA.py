@@ -50,6 +50,9 @@ def run(problem, params):
 
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
+        if avg_cost != 0:
+            for i in range(len(costs)):
+                costs[i] /= avg_cost
         probability = np.exp(-beta*costs)
 
         popc = []
@@ -60,13 +63,14 @@ def run(problem, params):
             p2 = pop[wheel_selection(probability)]
 
             # Crossover
-            c1, c2, c3, c4 = crossover(p1, p2)
+            c1, c2 = crossover(p1, p2)
 
-            # # Mutation
+
+            # Mutation
             c11 = mutation(c1, mu)
             c22 = mutation(c2, mu)
-            c33 = mutation(c3, mu)
-            c44 = mutation(c4, mu)
+            # c33 = mutation(c3, mu)
+            # c44 = mutation(c4, mu)
 
 
             # Evaluation
@@ -78,15 +82,6 @@ def run(problem, params):
             if c2.cost < bestSol.cost:
                 bestSol = c2.deepcopy()
 
-            c3.cost = costFunction(c3.position)
-            if c3.cost < bestSol.cost:
-                bestSol = c3.deepcopy()
-
-            c4.cost = costFunction(c4.position)
-            if c4.cost < bestSol.cost:
-                bestSol = c4.deepcopy()
-
-
 
             c11.cost = costFunction(c11.position)
             if c11.cost < bestSol.cost:
@@ -96,25 +91,22 @@ def run(problem, params):
             if c22.cost < bestSol.cost:
                 bestSol = c22.deepcopy()
 
-            c33.cost = costFunction(c33.position)
-            if c33.cost < bestSol.cost:
-                bestSol = c33.deepcopy()
+            # c33.cost = costFunction(c33.position)
+            # if c33.cost < bestSol.cost:
+            #     bestSol = c33.deepcopy()
 
-            c44.cost = costFunction(c44.position)
-            if c44.cost < bestSol.cost:
-                bestSol = c44.deepcopy()
-
+            # c44.cost = costFunction(c44.position)
+            # if c44.cost < bestSol.cost:
+            #     bestSol = c44.deepcopy()
 
             # Storing offsprings
-            popc.append(c1)
-            popc.append(c2)
-            popc.append(c3)
-            popc.append(c4)
+            # popc.append(c1)
+            # popc.append(c2)
 
             popc.append(c11)
             popc.append(c22)
-            popc.append(c33)
-            popc.append(c44)
+            # popc.append(c33)
+            # popc.append(c44)
 
 
         # Adding, Sorting, Marging....
@@ -140,23 +132,31 @@ def run(problem, params):
 
 def crossover(c1, c2):
 
-    a1 = c1.deepcopy()
-    a2 = c2.deepcopy()
+    # a1 = c1.deepcopy()
+    # a2 = c2.deepcopy()
 
     a3 = c1.deepcopy()
     a4 = c2.deepcopy()
 
-    partition = int(np.round(np.random.rand(1)*len(c1.position)-1))
+    # partition = int(np.round(np.random.rand(1)*len(c1.position)-1))
 
-    for i in range(partition, len(c2.position)):
-        a1.position[i] = c2.position[i]
+    # for i in range(partition, len(c2.position)):
+    #     a1.position[i] = c2.position[i]
 
-    for i in range(partition, len(c1.position)):
-        a2.position[i] = c1.position[i]
+    # for i in range(partition, len(c1.position)):
+    #     a2.position[i] = c1.position[i]
 
 
+    partition1 = -1
+    while partition1 == -1:
+        partition1 = int(np.round(np.random.rand(1)*len(c1.position)-1))
 
-    partition1 = int(np.round(np.random.rand(1))*(len(c1.position)-1))
+        if len(c1.position)%2 == 0:
+            if partition1 == int(len(c1.position)/2)-1 or partition1 == int(len(c1.position)/2):
+                partition1 = -1
+        if partition1 == 0 or partition1 == len(c1.position)-1:
+            partition1 = -1
+
     partition2 = len(c1.position) - partition1 -1
 
     if(partition1 > partition2):
@@ -170,7 +170,7 @@ def crossover(c1, c2):
     for i in range(partition1, partition2):
         a4.position[i] = c1.position[i]
 
-    return a1, a2, a3, a4
+    return a3, a4
 
 
 def mutation(x, mu):
