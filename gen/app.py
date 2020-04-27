@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from ypstruct import structure
 import GA
 
-WeightPerPosotion = [1000, -25, 625, -25, 100, -25, 25, -25, 205, -25, 250, -25] 
+WeightPerPosotion = [1000, 25, 625, 25, 100, 25, 25, 25, 205, -25, 250, -25] 
 
 # Sphere Test Function
 def Sphere(x):
@@ -28,7 +28,7 @@ params.cost = Sphere
 params.maxit = 50
 params.npop = 40    # Initial number of offspring
 params.pc = 1       # Proportional of offspring
-params.mu = 0.5     # Mutation parameter
+params.mu = 0.8     # Mutation parameter
 params.beta = 1     # Parent selection parameter
 
 
