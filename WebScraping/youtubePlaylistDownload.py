@@ -3,10 +3,9 @@ import requests
 import os
 import shutil
 from pytube import YouTube
+import time
 
-url = 'https://www.youtube.com/playlist?list=PLgH3sgdvgO4TQagjfi1FmPcdBjIlmk5s9'
-#url = 'https://www.youtube.com/playlist?list=PLZbbT5o_s2xrfNyHZsM6ufI0iZENK9xgG'
-#url = 'https://www.youtube.com/playlist?list=PLp1zSymEu3zJXITF_WuSPj32_Bni6062l'
+url = 'https://www.youtube.com/playlist?list=PL1w8k37X_6L9YSIvLqO29S9H0aZ1ncglu'
 response = requests.get(url)
 if response.ok:
     print('Ok\n')
@@ -31,7 +30,17 @@ for i in contents:
     
     print('downloading....... ' + i[1] + '.mp4')
     print()
+    startDownload = True
+
+    while startDownload:
+        startDownload = False
+        try:
+            YouTube(link).streams.filter(subtype='mp4').get_highest_resolution().download()        
+        except:
+            print("Failed")
+            startDownload = True
+            time.sleep(3)
+        #YouTube(link).streams.filter(subtype='mp4').get_highest_resolution().download()
     
-    YouTube(link).streams.filter(subtype='mp4').get_highest_resolution().download()
 
 print("DONE")
