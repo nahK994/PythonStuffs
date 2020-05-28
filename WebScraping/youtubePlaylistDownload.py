@@ -5,7 +5,7 @@ import shutil
 from pytube import YouTube
 import time
 
-url = 'https://www.youtube.com/playlist?list=PL1w8k37X_6L9YSIvLqO29S9H0aZ1ncglu'
+url = 'https://www.youtube.com/playlist?list=PL5O3zv2ZcASgNlf8UqqoWzmCwnqYNkvme'
 response = requests.get(url)
 if response.ok:
     print('Ok\n')

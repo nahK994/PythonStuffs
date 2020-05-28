@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 import os
 import shutil
-
+import time
 
 url = 'https://wallpaperplay.com/'
 response = requests.get(url)
@@ -74,11 +74,20 @@ for i in genres:
 
             imageFileName = str(imageNumber)
             imageNumber += 1
+            startDownload = True
+
             k = 'https://wallpaperplay.com' + k
             print('   ', imageFileName, " downloading... ", k)
 
-            r = requests.get(k)
-            with open(fileName + "/" + i[1] + "/" + j[0] + "/" + imageFileName, "wb") as f:
-                f.write(r.content)
+            while startDownload:
+                startDownload = False
+                try:
+                    r = requests.get(k)
+                    with open(fileName + "/" + i[1] + "/" + j[0] + "/" + imageFileName, "wb") as f:
+                        f.write(r.content)        
+                except:
+                    print("     Failed")
+                    startDownload = True
+                    time.sleep(3)
                 
 print("DONE")
