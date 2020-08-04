@@ -5,7 +5,7 @@ import pickle5 as pickle
 
 data = []
 label = []
-nameGreenImages = ['green1.png', 'green2.png', 'green3.png', 'green4.png', 'green5.png',
+nameGreenImages = ['green1.png', 'green2.png', 'green3.png', 'green5.png',
                 'green6.png', 'green7.png', 'green8.png', 'green9.png', 'green10.png']
 for i in nameGreenImages:
     img = Image.open(i)    
