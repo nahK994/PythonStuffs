@@ -1,6 +1,7 @@
 import cv2
 from sklearn.neural_network import MLPClassifier
 from PIL import Image
+import pickle5 as pickle
 
 data = []
 label = []
@@ -36,6 +37,8 @@ print('Number of point for Other pixel is', len(data) - aa) # 358
 clf = MLPClassifier(solver='lbfgs', alpha=1e-5, activation='tanh',
                     hidden_layer_sizes=(15,), random_state=1, max_iter=300)
 clf.fit(data, label)
+pickle.dump(clf, open('nn.sav', 'wb'))
+print("Model saved")
 # print(clf.predict([[100, 220, 43]]))
 # print(clf.predict([[100, 20, 43]]))
 # print(clf.predict([[10, 220, 43]]))
