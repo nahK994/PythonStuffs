@@ -18,6 +18,8 @@ is_selected = driver.find_element(By.XPATH, value="//input[@id='my-check-2']").i
 print(f"Checkbox 2 isSelected: {is_selected}")
 is_enabled = driver.find_element(By.XPATH, value="//input[@name='my-disabled']").is_enabled()
 print(f"Disabled box isEnabled: {is_enabled}")
+is_displayed = driver.find_element(By.XPATH, value="//select/option[@value='1']").is_displayed()
+print(f"Drop down item isDisplayed: {is_displayed}")
 
 text_box.send_keys("Selenium")
 submit_button.click()
