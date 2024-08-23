@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr, field_validator
+from typing import List
 
 class BaseUser(BaseModel):
     name: str
@@ -25,8 +26,16 @@ class User(BaseModel):
 
 
 base_user = BaseUser(name="Shomi Khan", email="nkskl6@gmail.com", account_id=6489)
-print(base_user)
-print(base_user.model_dump())
+base_user2 = BaseUser(name="SKhan", email="shomipython@gmail.com", account_id=8964)
+
 user = User(user=base_user, title="SE", age=18)
-print(user)
-print(user.model_dump())
+user2 = User(user=base_user2, title="HaHa", age=21)
+
+users: List[User] = []
+users.append(user)
+users.append(user2)
+
+
+print(f"User1 ==> {user.model_dump()}\n")
+print(f"User2 ==> {user2.model_dump()}\n")
+print(f"User list ==> {users}\n")
