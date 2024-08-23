@@ -1,6 +1,6 @@
 from random import randrange
 from fastapi import FastAPI, HTTPException, status
-from models import Post
+from .models import Post
 from typing import List
 
 app = FastAPI()
